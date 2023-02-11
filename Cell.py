@@ -1,12 +1,15 @@
+from Colors import Color
+
+
 class Cell:
-    def __init__(self, value, color):
+    def __init__(self, value: str, color: Color):
         self._value = value
         self._color = color
 
-    def set_value(self, new_value):
+    def set_value(self, new_value: str):
         self._value = new_value
 
-    def set_color(self, new_color):
+    def set_color(self, new_color: Color):
         self._color = new_color
 
     def get_value(self):

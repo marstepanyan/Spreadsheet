@@ -3,99 +3,121 @@ from Cell import Cell
 from Colors import Color
 
 
-def test_cells_funcs():
-    cell1 = Cell('7', Color(7))
-
-    if cell1.get_value() != '7':
-        print('cell\'s get_value() function failed')
+def testing(func, arg):
+    if func(arg):
+        print(f'{type(arg)}\'s {func.__name__} passed')
     else:
-        print('cell\'s get_value() function passed')
+        print(f'{type(arg)}\'s {func.__name__} failed')
 
-    if cell1.get_color() != Color(7):
-        print('cell\'s get_color() function failed')
-    else:
-        print('cell\'s get_color() function passed')
 
-    if cell1.to_int() != 7:
-        print('cell\'s to_int() function failed')
-    else:
-        print('cell\'s to_int() function passed')
+cell1 = Cell('9', Color(7))
 
-    if cell1.to_float() != 7.0:
-        print('cell\'s to_float() function failed')
-    else:
-        print('cell\'s to_float() function passed')
 
-    # print('cell1: ', cell1)
+def test_get_value(cell):
+    if cell.get_value() != '9':
+        return False
+    return True
 
-    cell1.reset()
+
+def test_get_color(cell):
+    if cell.get_color() != Color(7):
+        return False
+    return True
+
+
+def test_to_int(cell):
+    if cell.to_int() != 9:
+        return False
+    return True
+
+
+def test_to_float(cell):
+    if cell.to_float() != 9.0:
+        return False
+    return True
+
+
+def test_reset(cell):
+    cell.reset()
     if cell1.get_value() != '' and cell1.get_color() != '':
-        print('cell\'s reset() function failed')
-    else:
-        print('cell\'s reset() function passed')
-
-    # print('cell1 after reset: ', cell1)
+        return False
+    return True
 
 
-print('Testing cell\'s methods.')
-test_cells_funcs()
-print()
+spread_sheet1 = Spreadsheet(5, 7)
+# print('spread_sheet1:', spread_sheet1)
 
-cell2 = Cell('9', 'red')
+
+def test_set_cell_at(spread_sheet):
+    spread_sheet.set_cell_at(2, 1, cell1)
+    if cell1 != spread_sheet.get_sheet()[2][1]:
+        return False
+    return True
+
+
+def test_get_cell_at(spread_sheet):
+    if spread_sheet.get_cell_at(2, 1) != cell1:
+        return False
+    return True
+
+
+def test_add_row(spread_sheet):
+    spread_sheet.add_row(1)
+    if spread_sheet.get_cell_at(2+1, 1) != cell1:
+        return False
+    return True
+
+
+def test_add_column(spread_sheet):
+    spread_sheet.add_column(1)
+    if spread_sheet.get_cell_at(3, 1+1) != cell1:
+        return False
+    return True
+
+
+def test_remove_row(spread_sheet):
+    spread_sheet.remove_row(1)
+    if spread_sheet.get_cell_at(3 - 1, 2) != cell1:
+        return False
+    return True
+
+
+def test_remove_column(spread_sheet):
+    spread_sheet.remove_column(1)
+    if spread_sheet.get_cell_at(2, 2-1) != cell1:
+        return False
+    return True
+
+
+def test_swap_rows(spread_sheet):
+    spread_sheet.swap_rows(1, 2)
+    if spread_sheet.get_cell_at(1, 1) != cell1:
+        return False
+    return True
+
+
+def test_swap_columns(spread_sheet):
+    spread_sheet.swap_columns(1, 0)
+    if spread_sheet.get_cell_at(1, 0) != cell1:
+        return False
+    return True
+
+
+def test_cell_funcs():
+    print('Testing cell\'s methods.')
+    for f in [test_get_value, test_get_color, test_to_int, test_to_float, test_reset]:
+        testing(f, cell1)
+    return 'Done!'
 
 
 def test_spreadsheet_funcs():
-    spread_sheet = Spreadsheet(5, 7)
-
-    spread_sheet.set_cell_at(2, 1, cell2)
-    if cell2 != spread_sheet.get_sheet()[2, 1]:
-        print('Spreadsheet\'s set_cell_at function failed')
-    else:
-        print('Spreadsheet\'s set_cell_at function passed')
-
-    if spread_sheet.get_cell_at(2, 1) != cell2:
-        print('Spreadsheet\'s get_cell_at function failed')
-    else:
-        print('Spreadsheet\'s get_cell_at function passed')
-
-    spread_sheet.add_row(2)
-    if spread_sheet.get_cell_at(2+1, 1) != cell2:
-        print('Spreadsheet\'s add_row function failed')
-    else:
-        print('Spreadsheet\'s add_row function passed')
-
-    spread_sheet.add_column(1)
-    if spread_sheet.get_cell_at(3, 1+1) != cell2:
-        print('Spreadsheet\'s add_column function failed')
-    else:
-        print('Spreadsheet\'s add_column function passed')
-
-    spread_sheet.remove_row()
-    if spread_sheet.get_cell_at(3-1, 2) != cell2:
-        print('Spreadsheet\'s remove_row function failed')
-    else:
-        print('Spreadsheet\'s remove_row function passed')
-
-    spread_sheet.remove_column()
-    if spread_sheet.get_cell_at(2, 2-1) != cell2:
-        print('Spreadsheet\'s remove_column function failed')
-    else:
-        print('Spreadsheet\'s remove_column function passed')
-
-    spread_sheet.swap_rows(1, 2)
-    if spread_sheet.get_cell_at(1, 1) != cell2:
-        print('Spreadsheet\'s swap_row function failed')
-    else:
-        print('Spreadsheet\'s swap_row function passed')
-
-    spread_sheet.swap_columns(1, 0)
-    if spread_sheet.get_cell_at(1, 0) != cell2:
-        print('Spreadsheet\'s swap_column function failed')
-    else:
-        print('Spreadsheet\'s swap_column function passed')
-
-    # print(spread_sheet)
+    print('Testing spreadsheet\'s methods.')
+    for f in [test_set_cell_at, test_get_cell_at, test_add_row, test_add_column,
+              test_remove_row, test_remove_column, test_swap_rows, test_swap_columns]:
+        testing(f, spread_sheet1)
+    return 'Done!'
 
 
-print('Testing spreadsheet\'s methods.')
-test_spreadsheet_funcs()
+print(test_cell_funcs())
+print()
+print(test_spreadsheet_funcs())
