@@ -103,21 +103,24 @@ def test_swap_columns(spread_sheet):
     return True
 
 
-def test_cell_funcs():
+def test_cell_funcs(cell):
     print('Testing cell\'s methods.')
     for f in [test_get_value, test_get_color, test_to_int, test_to_float, test_reset]:
-        testing(f, cell1)
+        testing(f, cell)
     return 'Done!'
 
 
-def test_spreadsheet_funcs():
+def test_spreadsheet_funcs(spread_sheet):
     print('Testing spreadsheet\'s methods.')
     for f in [test_set_cell_at, test_get_cell_at, test_add_row, test_add_column,
               test_remove_row, test_remove_column, test_swap_rows, test_swap_columns]:
-        testing(f, spread_sheet1)
+        testing(f, spread_sheet)
     return 'Done!'
 
 
-print(test_cell_funcs())
+print(test_cell_funcs(cell1))
 print()
-print(test_spreadsheet_funcs())
+print(test_spreadsheet_funcs(spread_sheet1))
+
+
+
